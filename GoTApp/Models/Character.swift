@@ -1,6 +1,6 @@
 import Foundation
 
-struct Character: Codable, Identifiable {
+struct Character: Codable, Identifiable, Hashable {
     var id: String {
         // Synthetic ID, formed as name + extractedYear e.g., "Eddard Stark263"
         name + (born?.extractYear() ?? "")
@@ -18,17 +18,13 @@ struct Character: Codable, Identifiable {
     // computed properties
     var birthYear: String? { born?.extractYear() }
     var deathYear: String? { died?.extractYear() }
-}
 
-extension String {
-    /**
-     Extracts the first sequence of digits from a string (e.g., "263" from "In 263 AC").
-     */
-    func extractYear() -> String? {
-        let pattern = "\\d+"
-        guard let regex = try? NSRegularExpression(pattern: pattern) else { return nil }
-        let nsString = self as NSString
-        let results = regex.matches(in: self, range: NSRange(location: 0, length: nsString.length))
-        return results.first.map { nsString.substring(with: $0.range) }
+    var romanSeasons: [String] {
+        tvSeries?.compactMap { season in
+            guard let numberStr = season.extractYear(), let number = Int(numberStr) else {
+                return nil
+            }
+            return RomanNumeralConverter.toRoman(number)
+        } ?? []
     }
 }

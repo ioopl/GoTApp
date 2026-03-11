@@ -10,7 +10,7 @@ struct ErrorView: View {
                 .font(.system(size: 80))
                 .foregroundColor(.red)
 
-            Text("Access Denied")
+            Text("error_access_denied")
                 .font(.title)
                 .fontWeight(.bold)
 
@@ -21,7 +21,7 @@ struct ErrorView: View {
                 .padding(.horizontal)
 
             Button(action: onRetry) {
-                Text("Retry Authentication")
+                Text("error_retry_auth")
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding()

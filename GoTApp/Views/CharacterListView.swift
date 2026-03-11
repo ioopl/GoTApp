@@ -7,7 +7,7 @@ struct CharacterListView: View {
     var body: some View {
         Group {
             if viewModel.isLoading && viewModel.characters.isEmpty {
-                ProgressView("Loading Characters...")
+                ProgressView("loading_characters")
             } else if let error = viewModel.errorMessage {
                 VStack(spacing: 16) {
                     Image(systemName: "exclamationmark.triangle")
@@ -15,7 +15,7 @@ struct CharacterListView: View {
                         .foregroundColor(.red)
                     Text(error)
                         .multilineTextAlignment(.center)
-                    Button("Retry") {
+                    Button("retry_button") {
                         Task {
                             await viewModel.fetchCharacters()
                         }
@@ -32,13 +32,13 @@ struct CharacterListView: View {
                     }
                 }
                 .listStyle(.plain)
-                .searchable(text: $viewModel.searchText, prompt: "Search names or cultures")
+                .searchable(text: $viewModel.searchText, prompt: "search_placeholder")
                 .refreshable {
                     await viewModel.fetchCharacters()
                 }
             }
         }
-        .navigationTitle("GoT Characters")
+        .navigationTitle("character_list_title")
         .task {
             if viewModel.characters.isEmpty {
                 await viewModel.fetchCharacters()

@@ -23,25 +23,27 @@ struct CharacterDetailView: View {
 
                 VStack(alignment: .leading, spacing: 16) {
                     detailRow(
-                        title: "Born", value: character.born, romanValue: character.birthYearRoman)
+                        title: "detail_born", value: character.born,
+                        romanValue: character.birthYearRoman)
                     detailRow(
-                        title: "Died", value: character.died, romanValue: character.deathYearRoman)
+                        title: "detail_died", value: character.died,
+                        romanValue: character.deathYearRoman)
 
                     if let titles = character.titles, !titles.isEmpty {
-                        detailSection(title: "Titles", items: titles)
+                        detailSection(title: "detail_titles", items: titles)
                     }
 
                     if let aliases = character.aliases, !aliases.isEmpty {
-                        detailSection(title: "Aliases", items: aliases)
+                        detailSection(title: "detail_aliases", items: aliases)
                     }
 
                     if let playedBy = character.playedBy, !playedBy.isEmpty {
-                        detailSection(title: "Played By", items: playedBy)
+                        detailSection(title: "detail_played_by", items: playedBy)
                     }
 
                     if !character.romanSeasons.isEmpty {
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("Seasons")
+                            Text("detail_seasons")
                                 .font(.headline)
                                 .foregroundColor(.secondary)
 

@@ -13,7 +13,7 @@ class AppCoordinator: ObservableObject {
     func start() {
         // Here we could validate the API key. For simplicity, we'll assume token exists and is valid unless a service tells us otherwise later.
         if !isAuthenticated {
-            showError(message: "Invalid API Access Token")
+            showError(message: String(localized: "error_invalid_token"))
         }
     }
 

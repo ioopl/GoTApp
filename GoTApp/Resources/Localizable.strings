@@ -1,0 +1,19 @@
+/* Character List */
+"character_list_title" = "GoT Characters";
+"search_placeholder" = "Search names or cultures";
+"loading_characters" = "Loading Characters...";
+"retry_button" = "Retry";
+
+/* Character Detail */
+"detail_born" = "Born";
+"detail_died" = "Died";
+"detail_titles" = "Titles";
+"detail_aliases" = "Aliases";
+"detail_played_by" = "Played By";
+"detail_seasons" = "Seasons";
+
+/* Error View & Auth */
+"error_access_denied" = "Access Denied";
+"error_invalid_token" = "Invalid API Access Token";
+"error_retry_auth" = "Retry Authentication";
+"error_unknown" = "Unknown Error";

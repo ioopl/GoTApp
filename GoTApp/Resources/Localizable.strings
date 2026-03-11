@@ -17,3 +17,9 @@
 "error_invalid_token" = "Invalid API Access Token";
 "error_retry_auth" = "Retry Authentication";
 "error_unknown" = "Unknown Error";
+
+/* Accessibility Contexts */
+"accessibility_culture_format" = "Culture: %@";
+"accessibility_died_format" = "Died in %@";
+"accessibility_season_format" = "Appears in Season %@";
+"accessibility_character_row_hint" = "Shows detailed information for this character.";

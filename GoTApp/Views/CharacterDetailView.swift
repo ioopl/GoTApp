@@ -85,6 +85,10 @@ struct CharacterDetailView: View {
                     }
                 }
             }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(
+                "\(String(localized: String.LocalizationValue(title))): \(value)\(romanValue != nil ? ", \(romanValue!)" : "")"
+            )
         }
     }
 

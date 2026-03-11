@@ -46,6 +46,33 @@ struct CharacterRow: View {
             }
         }
         .padding(.vertical, 8)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityHint("accessibility_character_row_hint")
+    }
+
+    private var accessibilityLabel: String {
+        var components = [character.name]
+
+        if let culture = character.culture, !culture.isEmpty {
+            components.append(
+                String(
+                    localized: "accessibility_culture_format", defaultValue: "Culture: \(culture)"))
+        }
+
+        if let deathYear = character.deathYearRoman ?? character.deathYear {
+            components.append(
+                String(localized: "accessibility_died_format", defaultValue: "Died in \(deathYear)")
+            )
+        }
+
+        if !character.romanSeasons.isEmpty {
+            let seasonsStr = character.romanSeasons.joined(separator: ", ")
+            components.append(
+                String(localized: "detail_seasons", defaultValue: "Seasons") + ": " + seasonsStr)
+        }
+
+        return components.joined(separator: ", ")
     }
 }
 

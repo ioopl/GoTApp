@@ -17,6 +17,8 @@ struct SeasonBadge: View {
                 Capsule()
                     .stroke(Color.orange.opacity(0.3), lineWidth: 1)
             )
+            .accessibilityLabel(
+                String(localized: "accessibility_season_format", defaultValue: "Season \(season)"))
     }
 }
 

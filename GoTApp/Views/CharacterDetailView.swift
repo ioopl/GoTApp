@@ -22,8 +22,10 @@ struct CharacterDetailView: View {
                 Divider()
 
                 VStack(alignment: .leading, spacing: 16) {
-                    detailRow(title: "Born", value: character.born)
-                    detailRow(title: "Died", value: character.died)
+                    detailRow(
+                        title: "Born", value: character.born, romanValue: character.birthYearRoman)
+                    detailRow(
+                        title: "Died", value: character.died, romanValue: character.deathYearRoman)
 
                     if let titles = character.titles, !titles.isEmpty {
                         detailSection(title: "Titles", items: titles)
@@ -61,7 +63,7 @@ struct CharacterDetailView: View {
     }
 
     @ViewBuilder
-    private func detailRow(title: String, value: String?) -> some View {
+    private func detailRow(title: String, value: String?, romanValue: String? = nil) -> some View {
         if let value = value, !value.isEmpty {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
@@ -69,8 +71,17 @@ struct CharacterDetailView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.secondary)
                     .textCase(.uppercase)
-                Text(value)
-                    .font(.body)
+
+                HStack(spacing: 8) {
+                    Text(value)
+                        .font(.body)
+
+                    if let roman = romanValue {
+                        Text("(\(roman))")
+                            .font(.body.italic())
+                            .foregroundColor(.secondary)
+                    }
+                }
             }
         }
     }
@@ -96,15 +107,17 @@ struct CharacterDetailView: View {
 
 #Preview {
     NavigationView {
-        CharacterDetailView(character:
-                                Character(name: "Eddard Stark",
-                                          gender: "Male",
-                                          culture: "Northmen",
-                                          born: "263 AC",
-                                          died: "299 AC",
-                                          titles: ["Lord of Winterfell", "Hand of the King"],
-                                          aliases: ["Ned"],
-                                          tvSeries: ["Season 1", "Season 6"],
-                                          playedBy: ["Sean Bean"]))
+        CharacterDetailView(
+            character:
+                Character(
+                    name: "Eddard Stark",
+                    gender: "Male",
+                    culture: "Northmen",
+                    born: "263 AC",
+                    died: "299 AC",
+                    titles: ["Lord of Winterfell", "Hand of the King"],
+                    aliases: ["Ned"],
+                    tvSeries: ["Season 1", "Season 6"],
+                    playedBy: ["Sean Bean"]))
     }
 }

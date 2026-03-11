@@ -20,7 +20,7 @@ struct CharacterRow: View {
 
                 Spacer()
 
-                if let deathYear = character.deathYear {
+                if let deathYear = character.deathYearRoman ?? character.deathYear {
                     HStack(spacing: 4) {
                         Image(systemName: "flag.pattern.checkered.2.crossed")
                             .font(.caption2)

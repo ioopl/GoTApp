@@ -19,11 +19,22 @@ struct Character: Codable, Identifiable, Hashable {
     var birthYear: String? { born?.extractYear() }
     var deathYear: String? { died?.extractYear() }
 
+    var birthYearRoman: String? {
+        guard let year = birthYear,
+                let number = Int(year) else { return nil }
+        return RomanNumeralConverter.toRoman(number)
+    }
+
+    var deathYearRoman: String? {
+        guard let year = deathYear,
+                let number = Int(year) else { return nil }
+        return RomanNumeralConverter.toRoman(number)
+    }
+
     var romanSeasons: [String] {
         tvSeries?.compactMap { season in
-            guard let numberStr = season.extractYear(), let number = Int(numberStr) else {
-                return nil
-            }
+            guard let numberStr = season.extractYear(),
+                    let number = Int(numberStr) else { return nil }
             return RomanNumeralConverter.toRoman(number)
         } ?? []
     }

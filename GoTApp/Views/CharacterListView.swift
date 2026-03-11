@@ -26,11 +26,9 @@ struct CharacterListView: View {
             } else {
                 List {
                     ForEach(viewModel.characters) { character in
-                        CharacterRow(character: character)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                coordinator.showDetail(for: character)
-                            }
+                        NavigationLink(value: GoTDestination.detail(character)) {
+                            CharacterRow(character: character)
+                        }
                     }
                 }
                 .listStyle(.plain)

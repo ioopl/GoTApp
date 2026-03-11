@@ -1,21 +1,26 @@
-//
-//  ContentView.swift
-//  GoTApp
-//
-//  Created by Umair Hasan on 09/03/2026.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var coordinator = AppCoordinator()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            if coordinator.isAuthenticated {
+                NavigationStack(path: $coordinator.path) {
+                    CharacterListView()
+                }
+            } else {
+                ErrorView(
+                    message: coordinator.errorMessage ?? "Unknown Error",
+                    onRetry: {
+                        coordinator.retry()
+                    })
+            }
         }
-        .padding()
+        .environmentObject(coordinator)
+        .task {
+            coordinator.start()
+        }
     }
 }
 

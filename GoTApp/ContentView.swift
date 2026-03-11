@@ -8,6 +8,12 @@ struct ContentView: View {
             if coordinator.isAuthenticated {
                 NavigationStack(path: $coordinator.path) {
                     CharacterListView()
+                        .navigationDestination(for: GoTDestination.self) { destination in
+                            switch destination {
+                            case .detail(let character):
+                                CharacterDetailView(character: character)
+                            }
+                        }
                 }
             } else {
                 ErrorView(

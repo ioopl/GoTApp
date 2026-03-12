@@ -13,7 +13,7 @@ struct RomanNumeralConverter {
         }
 
         var romanString = ""
-        var num = number
+        let num = number
 
         let mCount = num / 1000
         for _ in 0..<mCount {

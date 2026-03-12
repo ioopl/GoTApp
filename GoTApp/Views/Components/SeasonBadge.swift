@@ -6,16 +6,16 @@ struct SeasonBadge: View {
     var body: some View {
         Text(season)
             .font(.caption2.bold())
-            .padding(.horizontal, 6)
-            .padding(.vertical, 2)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
             .background(
-                Capsule()
-                    .fill(Color.orange.opacity(0.15))
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(AppSettings.backgroundColorScheme)
             )
-            .foregroundColor(.orange)
+            .foregroundColor(AppSettings.textColorScheme)
             .overlay(
-                Capsule()
-                    .stroke(Color.orange.opacity(0.3), lineWidth: 1)
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(AppSettings.primaryGold.opacity(0.3), lineWidth: 0.5)
             )
             .accessibilityLabel(
                 String(localized: "accessibility_season_format", defaultValue: "Season \(season)"))

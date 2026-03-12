@@ -1,6 +1,8 @@
 /* Character List */
-"character_list_title" = "GoT Characters";
-"search_placeholder" = "Search names or cultures";
+"character_list_title" = "GAME OF THRONES";
+"character_directory_subtitle" = "Character Directory";
+"appeared_in_label" = "Appeared in:";
+"search_placeholder" = "Search characters...";
 "loading_characters" = "Loading Characters...";
 "retry_button" = "Retry";
 

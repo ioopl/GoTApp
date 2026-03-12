@@ -1,51 +1,67 @@
 import SwiftUI
+import UIKit
 
 struct CharacterRow: View {
     let character: Character
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(character.name)
-                        .font(.headline)
-                        .foregroundColor(.primary)
+        VStack(alignment: .leading, spacing: 16) {
+            // Header: Name and Culture
+            VStack(alignment: .leading, spacing: 8) {
+                Text(character.name)
+                    .font(.custom(AppSettings.headerSerif, size: 20))
+                    .foregroundColor(.primary)
 
-                    if let culture = character.culture, !culture.isEmpty {
-                        Text(culture)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
-                }
-
-                Spacer()
-
-                if let deathYear = character.deathYearRoman ?? character.deathYear {
-                    HStack(spacing: 4) {
-                        Image(systemName: "flag.pattern.checkered.2.crossed")
-                            .font(.caption2)
-                        Text(deathYear)
-                            .font(.caption.bold())
-                    }
-                    .foregroundColor(.gray)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(6)
+                if let culture = character.culture, !culture.isEmpty {
+                    Text(culture)
+                        .font(.caption.bold())
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(AppSettings.primaryGold.opacity(0.8))
+                        .foregroundColor(.white)
+                        .cornerRadius(4)
                 }
             }
 
+            // Status: Deceased info
+            if let deathYear = character.deathYearRoman ?? character.deathYear {
+                HStack(spacing: 8) {
+                    Text("💀")
+                        .font(.caption)
+                    Text("☨ \(deathYear)")
+                        .font(.caption.bold())
+                }
+                .foregroundColor(.red.opacity(0.8))
+            }
+
+            // Seasons Section
             if !character.romanSeasons.isEmpty {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 6) {
-                        ForEach(character.romanSeasons, id: \.self) { season in
-                            SeasonBadge(season: season)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("appeared_in_label")
+                        .font(.caption2)
+                        .foregroundColor(AppSettings.primaryGold)
+                        .textCase(.uppercase)
+
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            ForEach(character.romanSeasons, id: \.self) { season in
+                                SeasonBadge(season: season)
+                            }
                         }
                     }
                 }
             }
         }
-        .padding(.vertical, 8)
+        .padding(20)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color(UIColor.secondarySystemBackground))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.primary.opacity(0.05), lineWidth: 1)
+        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHint("accessibility_character_row_hint")

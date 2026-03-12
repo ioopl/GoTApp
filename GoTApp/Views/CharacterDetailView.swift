@@ -107,7 +107,7 @@ struct CharacterDetailView: View {
     @ViewBuilder
     private func detailCard(title: String, value: String, romanValue: String? = nil) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .font(.caption.bold())
                 .foregroundColor(.secondary)
                 .textCase(.uppercase)
@@ -143,7 +143,7 @@ struct CharacterDetailView: View {
     @ViewBuilder
     private func listCard(title: String, items: [String]) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .font(.caption.bold())
                 .foregroundColor(.secondary)
                 .textCase(.uppercase)

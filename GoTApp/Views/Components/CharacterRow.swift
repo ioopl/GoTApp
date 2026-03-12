@@ -5,52 +5,60 @@ struct CharacterRow: View {
     let character: Character
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            // Header: Name and Culture
-            VStack(alignment: .leading, spacing: 8) {
-                Text(character.name)
-                    .font(.custom(AppSettings.headerSerif, size: 20))
-                    .foregroundColor(.primary)
-
-                if let culture = character.culture, !culture.isEmpty {
-                    Text(culture)
-                        .font(.caption.bold())
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(AppSettings.primaryGold.opacity(0.8))
-                        .foregroundColor(.white)
-                        .cornerRadius(4)
-                }
-            }
-
-            // Status: Deceased info
-            if let deathYear = character.deathYearRoman ?? character.deathYear {
-                HStack(spacing: 8) {
-                    Text("💀")
-                        .font(.caption)
-                    Text("☨ \(deathYear)")
-                        .font(.caption.bold())
-                }
-                .foregroundColor(.red.opacity(0.8))
-            }
-
-            // Seasons Section
-            if !character.romanSeasons.isEmpty {
+        HStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 16) {
+                // Header: Name and Culture
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("appeared_in_label")
-                        .font(.caption2)
-                        .foregroundColor(AppSettings.primaryGold)
-                        .textCase(.uppercase)
+                    Text(character.name)
+                        .font(.custom(AppSettings.headerSerif, size: 20))
+                        .foregroundColor(.primary)
 
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            ForEach(character.romanSeasons, id: \.self) { season in
-                                SeasonBadge(season: season)
+                    if let culture = character.culture, !culture.isEmpty {
+                        Text(culture)
+                            .font(.caption.bold())
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(AppSettings.primaryGold.opacity(0.8))
+                            .foregroundColor(.white)
+                            .cornerRadius(4)
+                    }
+                }
+
+                // Status: Deceased info
+                if let deathYear = character.deathYearRoman ?? character.deathYear {
+                    HStack(spacing: 8) {
+                        Text("💀")
+                            .font(.caption)
+                        Text("☨ \(deathYear)")
+                            .font(.caption.bold())
+                    }
+                    .foregroundColor(.red.opacity(0.8))
+                }
+
+                // Seasons Section
+                if !character.romanSeasons.isEmpty {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("appeared_in_label")
+                            .font(.caption2)
+                            .foregroundColor(AppSettings.primaryGold)
+                            .textCase(.uppercase)
+
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                ForEach(character.romanSeasons, id: \.self) { season in
+                                    SeasonBadge(season: season)
+                                }
                             }
                         }
                     }
                 }
             }
+
+            Spacer()
+
+            Image(systemName: "chevron.right")
+                .font(.footnote.bold())
+                .foregroundColor(AppSettings.primaryGold.opacity(0.5))
         }
         .padding(20)
         .frame(maxWidth: .infinity, alignment: .leading)

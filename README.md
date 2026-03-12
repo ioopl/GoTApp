@@ -1,10 +1,10 @@
 # About
 
-This is an iOS App for the Game of Thrones characters.
+This is an iOS App for the Game of Thrones characters. The App uses MVVM-C deisgn pattern with navigation via Coordinator and Veiw Model injection via Dependency Injection. TDD principles were followed with SOLID OOP principles in mind.
 
 # Installation guide
 
-This project uses Xcode 16.2
+This project uses Xcode 16.2 and tested on simulator iOS 18.4 
 
 ## To check the Response run teh command to see the real JSON from the API printed in console.
 

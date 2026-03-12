@@ -7,12 +7,13 @@
 "retry_button" = "Retry";
 
 /* Character Detail */
+"character_detail_title" = "Character Details";
 "detail_born" = "Born";
 "detail_died" = "Died";
 "detail_titles" = "Titles";
 "detail_aliases" = "Aliases";
 "detail_played_by" = "Played By";
-"detail_seasons" = "Seasons";
+"detail_seasons" = "Seasons Appeared";
 
 /* Error View & Auth */
 "error_access_denied" = "Access Denied";

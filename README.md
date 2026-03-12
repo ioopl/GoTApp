@@ -6,7 +6,7 @@ This is an iOS App for the Game of Thrones characters. The App uses MVVM-C deisg
 
 This project uses Xcode 16.2 and tested on simulator iOS 18.4 
 
-## To check the Response run teh command to see the real JSON from the API printed in console.
+## To check the Response run the following command to see the real JSON from the API printed in console.
 
 ```bash
 curl -m 10 -H 'Authorization: Bearer 754t!si@glcE2qmOFEcN' \
@@ -19,8 +19,12 @@ or run the test
 xcodebuild test -project GoTApp.xcodeproj -scheme GoTApp -destination 'platform=iOS Simulator,name=iPhone 15' -only-testing GoTAppTests/NetworkIntegrationTests
 ```
 
-## Installation
+# Design System
 
-```bash
+- Centralized:  All design tokens (colors, fonts, sizes) in AppSettings file 
+- Adaptive UI: All components  automatically support Light and Dark modes using system backgrounds and adaptive colors.
 
-```
+# Quality Assurance
+
+- Accessibility: VoiceOver support with contextual labels 
+- Automated Tests: Verified the codebase with comprehensive Unit test

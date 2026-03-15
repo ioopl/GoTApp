@@ -70,7 +70,7 @@ struct CharacterListView: View {
                     .refreshable {
                         await viewModel.fetchCharacters()
                     }
-                    .searchable(text: $viewModel.searchText, prompt: "search_placeholder")
+                    .searchable(text: $viewModel.searchText, prompt: "search_placeholder") // SwiftUI binds the search field to this property in the ViewModel, And every time searchText changes, its didSet runs automatically
                 }
             }
         }

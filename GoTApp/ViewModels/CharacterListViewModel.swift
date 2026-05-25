@@ -4,10 +4,9 @@ import Foundation
 class CharacterListViewModel: ObservableObject {
     
     @Published var characters: [Character] = []
+    @Published private(set) var avatarCacheBuster: String?
     @Published var searchText: String = "" {
         didSet {
-            let query = searchText
-
             // Trigger search with debounce when text changes
             Task {
                 await debounceSearch(query: searchText)
@@ -18,17 +17,27 @@ class CharacterListViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     private let service: CharacterServiceProtocol
+    private let bustAvatarCacheOnRefresh: Bool
     private var allCharacters: [Character] = []
     private var searchTask: Task<Void, Never>?
 
     // The view model accepts an injected CharacterServiceProtocol
-    init(service: CharacterServiceProtocol = CharacterService()) {
+    init(
+        service: CharacterServiceProtocol = CharacterService(),
+        bustAvatarCacheOnRefresh: Bool = true
+    ) {
         self.service = service
+        self.bustAvatarCacheOnRefresh = bustAvatarCacheOnRefresh
     }
 
-    func fetchCharacters() async {
+    func fetchCharacters(refreshAvatars: Bool = false) async {
         isLoading = true
         errorMessage = nil
+
+        if refreshAvatars && bustAvatarCacheOnRefresh {
+            avatarCacheBuster = UUID().uuidString
+        }
+
         do {
             allCharacters = try await service.getCharacters()
             filterCharacters(using: searchText)

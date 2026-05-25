@@ -3,9 +3,17 @@ import UIKit
 
 struct CharacterRow: View {
     let character: Character
+    let avatarCacheBuster: String?
+
+    init(character: Character, avatarCacheBuster: String? = nil) {
+        self.character = character
+        self.avatarCacheBuster = avatarCacheBuster
+    }
 
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 16) {
+            avatarView
+
             VStack(alignment: .leading, spacing: 16) {
                 // Header: Name and Culture
                 VStack(alignment: .leading, spacing: 8) {
@@ -75,6 +83,41 @@ struct CharacterRow: View {
         .accessibilityHint("accessibility_character_row_hint")
     }
 
+    @ViewBuilder
+    private var avatarView: some View {
+        AsyncImage(url: AvatarURLBuilder.url(for: character.id, cacheBuster: avatarCacheBuster)) { phase in
+            switch phase {
+            case .empty:
+                ZStack {
+                    Circle()
+                        .fill(AppSettings.primaryGold.opacity(0.12))
+                    ProgressView()
+                        .tint(AppSettings.primaryGold)
+                }
+            case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFill()
+            case .failure:
+                ZStack {
+                    Circle()
+                        .fill(Color(UIColor.tertiarySystemFill))
+                    Image(systemName: "pawprint.fill")
+                        .foregroundColor(AppSettings.primaryGold)
+                }
+            @unknown default:
+                Color.clear
+            }
+        }
+        .frame(width: 56, height: 56)
+        .clipShape(Circle())
+        .overlay(
+            Circle()
+                .stroke(AppSettings.primaryGold.opacity(0.25), lineWidth: 1)
+        )
+        .accessibilityHidden(true)
+    }
+
     private var accessibilityLabel: String {
         var components = [character.name]
 
@@ -113,7 +156,8 @@ struct CharacterRow: View {
                 aliases: nil,
                 tvSeries: ["Season 1", "Season 6"],
                 playedBy: nil
-            ))
+            ),
+            avatarCacheBuster: nil)
 
         CharacterRow(
             character: Character(
@@ -126,7 +170,8 @@ struct CharacterRow: View {
                 aliases: nil,
                 tvSeries: ["Season 1", "Season 2", "Season 3"],
                 playedBy: nil
-            ))
+            ),
+            avatarCacheBuster: nil)
     }
     .padding()
 }

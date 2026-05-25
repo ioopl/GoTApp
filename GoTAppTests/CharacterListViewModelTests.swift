@@ -88,6 +88,55 @@ final class CharacterListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.characters.count, 1)
         XCTAssertEqual(sut.characters.first?.name, "Tyrion Lannister")
     }
+
+    @MainActor
+    func testFetchCharacters_RefreshAvatarsUpdatesCacheBuster() async {
+        mockService.stubCharacters = [
+            Character(
+                name: "Arya Stark",
+                gender: nil,
+                culture: nil,
+                born: "289 AC",
+                died: nil,
+                titles: nil,
+                aliases: nil,
+                tvSeries: nil,
+                playedBy: nil
+            )
+        ]
+
+        XCTAssertNil(sut.avatarCacheBuster)
+
+        await sut.fetchCharacters(refreshAvatars: true)
+        let firstCacheBuster = sut.avatarCacheBuster
+
+        await sut.fetchCharacters(refreshAvatars: true)
+
+        XCTAssertNotNil(firstCacheBuster)
+        XCTAssertNotNil(sut.avatarCacheBuster)
+        XCTAssertNotEqual(firstCacheBuster, sut.avatarCacheBuster)
+    }
+
+    @MainActor
+    func testFetchCharacters_DefaultLoadDoesNotUpdateAvatarCacheBuster() async {
+        mockService.stubCharacters = [
+            Character(
+                name: "Arya Stark",
+                gender: nil,
+                culture: nil,
+                born: "289 AC",
+                died: nil,
+                titles: nil,
+                aliases: nil,
+                tvSeries: nil,
+                playedBy: nil
+            )
+        ]
+
+        await sut.fetchCharacters()
+
+        XCTAssertNil(sut.avatarCacheBuster)
+    }
 }
 
 class MockCharacterService: CharacterServiceProtocol {

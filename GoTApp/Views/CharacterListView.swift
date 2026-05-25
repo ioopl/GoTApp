@@ -47,7 +47,7 @@ struct CharacterListView: View {
                             .multilineTextAlignment(.center)
                         Button("retry_button") {
                             Task {
-                                await viewModel.fetchCharacters()
+                                await viewModel.fetchCharacters(refreshAvatars: true)
                             }
                         }
                         .buttonStyle(.bordered)
@@ -60,7 +60,10 @@ struct CharacterListView: View {
                         LazyVStack(spacing: 16) {
                             ForEach(viewModel.characters) { character in
                                 NavigationLink(value: GoTDestination.detail(character)) {
-                                    CharacterRow(character: character)
+                                    CharacterRow(
+                                        character: character,
+                                        avatarCacheBuster: viewModel.avatarCacheBuster
+                                    )
                                 }
                                 .buttonStyle(.plain)
                             }
@@ -68,7 +71,7 @@ struct CharacterListView: View {
                         .padding()
                     }
                     .refreshable {
-                        await viewModel.fetchCharacters()
+                        await viewModel.fetchCharacters(refreshAvatars: true)
                     }
                     .searchable(text: $viewModel.searchText, prompt: "search_placeholder") // SwiftUI binds the search field to this property in the ViewModel, And every time searchText changes, its didSet runs automatically
                 }

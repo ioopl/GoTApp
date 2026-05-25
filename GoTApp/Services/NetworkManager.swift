@@ -19,7 +19,7 @@ enum APIError: LocalizedError {
     }
 }
 
-class NetworkManager: ObservableObject {
+class NetworkManager {
     static let shared = NetworkManager()
     
     // session allows tests to mock the URLSession
@@ -31,9 +31,7 @@ class NetworkManager: ObservableObject {
     private let tokenKey = AppConfig.shared.accessToken
     
     private let userKey = "currentUser"
-    
-    @Published var isAuthenticated: Bool = false
-    
+        
     // MARK: - Request Logic
     
     func request<T: Decodable>(endpoint: String,

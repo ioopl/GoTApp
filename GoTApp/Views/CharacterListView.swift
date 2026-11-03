@@ -2,8 +2,8 @@ import SwiftUI
 import UIKit
 
 struct CharacterListView: View {
-    @StateObject private var viewModel = CharacterListViewModel()
-    @EnvironmentObject var coordinator: AppCoordinator
+    @State private var viewModel = CharacterListViewModel()
+    @Environment(AppCoordinator.self) var coordinator
 
     var body: some View {
         ZStack {
@@ -73,7 +73,7 @@ struct CharacterListView: View {
                     .refreshable {
                         await viewModel.fetchCharacters(refreshAvatars: true)
                     }
-                    .searchable(text: $viewModel.searchText, prompt: "search_placeholder") // SwiftUI binds the search field to this property in the ViewModel, And every time searchText changes, its didSet runs automatically
+                    .searchable(text: Bindable(viewModel).searchText, prompt: "search_placeholder") // SwiftUI binds the search field to this property in the ViewModel, And every time searchText changes, its didSet runs automatically
                 }
             }
         }

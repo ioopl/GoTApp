@@ -1,20 +1,20 @@
 import Foundation
 
 @MainActor
-class CharacterListViewModel: ObservableObject {
-    
-    @Published var characters: [Character] = []
-    @Published private(set) var avatarCacheBuster: String?
-    @Published var searchText: String = "" {
+@Observable
+class CharacterListViewModel {
+
+    var characters: [Character] = []
+    private(set) var avatarCacheBuster: String?
+    var searchText: String = "" {
         didSet {
             // Trigger search with debounce when text changes
-            Task {
-                await debounceSearch(query: searchText)
+            Task { await debounceSearch(query: searchText)
             }
         }
     }
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String?
+    var isLoading: Bool = false
+    var errorMessage: String?
 
     private let service: CharacterServiceProtocol
     private let bustAvatarCacheOnRefresh: Bool
@@ -22,10 +22,8 @@ class CharacterListViewModel: ObservableObject {
     private var searchTask: Task<Void, Never>?
 
     // The view model accepts an injected CharacterServiceProtocol
-    init(
-        service: CharacterServiceProtocol = CharacterService(),
-        bustAvatarCacheOnRefresh: Bool = true
-    ) {
+    init(service: CharacterServiceProtocol = CharacterService(),
+        bustAvatarCacheOnRefresh: Bool = true) {
         self.service = service
         self.bustAvatarCacheOnRefresh = bustAvatarCacheOnRefresh
     }
@@ -35,11 +33,10 @@ class CharacterListViewModel: ObservableObject {
         errorMessage = nil
 
         if refreshAvatars && bustAvatarCacheOnRefresh {
-            avatarCacheBuster = UUID().uuidString
-        }
+            avatarCacheBuster = UUID().uuidString }
 
         do {
-            allCharacters = try await service.getCharacters()
+            allCharacters = try await service.getCharacters2()
             filterCharacters(using: searchText)
         } catch {
             errorMessage = error.localizedDescription
@@ -47,9 +44,7 @@ class CharacterListViewModel: ObservableObject {
         isLoading = false
     }
 
-    /**
-     Delay the execution of a search/filter operation
-    */
+    /** Delay the execution of a search/filter operation*/
     private func debounceSearch(query: String) async {
         searchTask?.cancel() // cancels the previous pending debounce TASK
         searchTask = Task { // Create a new async TASK

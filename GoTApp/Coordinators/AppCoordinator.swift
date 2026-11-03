@@ -5,10 +5,11 @@ enum GoTDestination: Hashable {
 }
 
 @MainActor
-class AppCoordinator: ObservableObject {
-    @Published var path = NavigationPath()
-    @Published var isAuthenticated: Bool = true
-    @Published var errorMessage: String?
+@Observable
+class AppCoordinator {
+    var path = NavigationPath()
+    var isAuthenticated: Bool = true
+    var errorMessage: String?
 
     func start() {
         // Here we could validate the API key. For simplicity, we'll assume token exists and is valid unless a service tells us otherwise later.

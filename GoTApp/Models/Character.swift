@@ -16,8 +16,12 @@ struct Character: Codable, Identifiable, Hashable {
     let playedBy: [String]?
 
     // computed properties
-    var birthYear: String? { born?.extractYear() }
-    var deathYear: String? { died?.extractYear() }
+    var birthYear: String? {
+        born?.extractYear()
+    }
+    var deathYear: String? {
+        died?.extractYear()
+    }
 
     var birthYearRoman: String? {
         guard let year = birthYear,

@@ -140,6 +140,11 @@ final class CharacterListViewModelTests: XCTestCase {
 }
 
 class MockCharacterService: CharacterServiceProtocol {
+    func getCharacters2() async throws -> [Character] {
+        if let error = stubError { throw error }
+        return stubCharacters
+    }
+    
     var stubCharacters: [Character] = []
     var stubError: Error?
 

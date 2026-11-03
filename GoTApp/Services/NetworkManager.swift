@@ -18,6 +18,7 @@ enum APIError: LocalizedError {
     }
 }
 
+@Observable
 class NetworkManager {
     static let shared = NetworkManager()
     

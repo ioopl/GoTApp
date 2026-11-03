@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var coordinator = AppCoordinator()
+    @State private var coordinator = AppCoordinator()
 
     var body: some View {
         Group {
@@ -23,7 +23,7 @@ struct ContentView: View {
                     })
             }
         }
-        .environmentObject(coordinator)
+        .environment(coordinator)
         .task {
             coordinator.start()
         }
